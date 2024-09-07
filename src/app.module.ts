@@ -8,7 +8,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [HttpModule, MongooseModule.forRoot('mongodb://localhost:27017'), UserModule,],
+  imports: [HttpModule, MongooseModule.forRoot('mongodb://127.0.0.1:27017/nest'), UserModule,],
   controllers: [AppController, ScryfallController],
   providers: [AppService, ScryfallService],
 })
