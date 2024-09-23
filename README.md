@@ -71,3 +71,10 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+## incrementos de Mami para desafio profissional 6
+
+AO FAZER REQUISIÇÃO PARA O ENDPOINT APRENSENTA:
+
+- deck completo (comandante + 99 cartas) em um arquivo deck.json.
+- Retornar o deck completo na resposta.
