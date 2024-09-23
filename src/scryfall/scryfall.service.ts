@@ -1,11 +1,14 @@
 import { HttpService } from "@nestjs/axios";
 import { Injectable } from "@nestjs/common";
 import { lastValueFrom } from "rxjs";
-import * as fs from 'fs';  // Importando o módulo File System
+import { DeckService } from 'src/deck/deck.service';  // Importando o serviço do deck
 
 @Injectable()
 export class ScryfallService {
-    constructor(private httpService: HttpService) { }
+    constructor(
+        private httpService: HttpService,
+        private readonly deckService: DeckService // Injetando o serviço do deck
+    ) {}
 
     // Buscar o comandante pelo nome
     async findCommanderByName(name: string): Promise<any> {
@@ -68,26 +71,18 @@ export class ScryfallService {
                 deck.push(basicLands[Math.floor(Math.random() * basicLands.length)]);
             }
 
-            console.log(`Deck final gerado com ${deck.length} cartas`); // Log do tamanho do deck gerado
             return deck;
         } catch (error) {
             throw new Error('Failed to fetch deck cards');
         }
     }
 
-    // Função para salvar o deck em um arquivo JSON
-    async saveDeckToFile(commander: any, deck: any[], fileName: string = 'deck.json') {
-        const data = {
-            commander,
-            deck
-        };
+    // Função para salvar o deck no MongoDB
+    async saveDeckToDatabase(commander: any, deck: any[]): Promise<any> {
+        const commanderName = commander.name;
+        const commanderColors = commander.color_identity;
 
-        try {
-            fs.writeFileSync(fileName, JSON.stringify(data, null, 2));  // Escreve o arquivo JSON
-            console.log(`Deck salvo com sucesso no arquivo: ${fileName}`);
-        } catch (error) {
-            console.error('Erro ao salvar o arquivo JSON:', error.message);
-            throw new Error('Failed to save deck to file');
-        }
+        // Salvar o deck no MongoDB
+        return await this.deckService.createDeck(commanderName, commanderColors, deck);
     }
 }

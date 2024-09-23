@@ -6,9 +6,10 @@ import { ScryfallController } from './scryfall/scryfall.controller';
 import { HttpModule } from '@nestjs/axios';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
+import { DeckModule } from './deck/deck.module';
 
 @Module({
-  imports: [HttpModule, MongooseModule.forRoot('mongodb://127.0.0.1:27017/nest'), UserModule,],
+  imports: [HttpModule, DeckModule, MongooseModule.forRoot('mongodb://127.0.0.1:27017/nest'), UserModule,],
   controllers: [AppController, ScryfallController],
   providers: [AppService, ScryfallService],
   exports: [ScryfallService],

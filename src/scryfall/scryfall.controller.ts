@@ -18,14 +18,11 @@ export class ScryfallController {
             // 2. Busca as 99 cartas para o deck
             const deck = await this.scryfallService.findDeckCards(commander.color_identity);
 
-            // 3. Salva o deck em um arquivo JSON
-            await this.scryfallService.saveDeckToFile(commander, deck, 'deck.json');
+            // 3. Salva o deck no MongoDB
+            const savedDeck = await this.scryfallService.saveDeckToDatabase(commander, deck);
 
-            // 4. Retorna o deck completo (comandante + 99 cartas)
-            return {
-                commander,
-                deck
-            };
+            // 4. Retorna o deck completo (comandante + 99 cartas salvas)
+            return savedDeck;
         } catch (error) {
             throw new BadRequestException(`Error: ${error.message}`);
         }
